@@ -1,1 +1,792 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Burken Jacobs</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --navy: #0d1b2a;
+      --cream: #f5f0e8;
+      --gold: #c9a84c;
+      --gold-light: #e8c96e;
+      --text: #1a1a2e;
+      --muted: #6b7280;
+      --card-bg: #ffffff;
+      --border: #e2ddd4;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 4rem;
+      background: rgba(13,27,42,0.96);
+      backdrop-filter: blur(8px);
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: #ccc;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      background: var(--navy);
+      display: flex;
+      align-items: center;
+      padding: 0 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg-shape {
+      position: absolute;
+      top: -10%;
+      right: -5%;
+      width: 55%;
+      height: 120%;
+      background: linear-gradient(135deg, #1a2e45 0%, #0d1b2a 60%);
+      clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%);
+    }
+
+    .hero-accent {
+      position: absolute;
+      top: 40%;
+      right: 18%;
+      width: 320px;
+      height: 320px;
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 50%;
+      animation: pulse 6s ease-in-out infinite;
+    }
+
+    .hero-accent-2 {
+      position: absolute;
+      top: 35%;
+      right: 14%;
+      width: 420px;
+      height: 420px;
+      border: 1px solid rgba(201,168,76,0.1);
+      border-radius: 50%;
+      animation: pulse 6s ease-in-out infinite 1.5s;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.6; }
+      50% { transform: scale(1.04); opacity: 1; }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 620px;
+    }
+
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.2s;
+    }
+
+    .hero-name {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3.5rem, 7vw, 6rem);
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.05;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.4s;
+    }
+
+    .hero-name span { color: var(--gold); }
+
+    .hero-tagline {
+      margin-top: 1.5rem;
+      font-size: 1.1rem;
+      font-weight: 300;
+      color: #aab4c0;
+      line-height: 1.7;
+      max-width: 480px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.6s;
+    }
+
+    .hero-cta {
+      margin-top: 2.5rem;
+      display: flex;
+      gap: 1rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.8s;
+    }
+
+    .btn-primary {
+      padding: 0.85rem 2rem;
+      background: var(--gold);
+      color: var(--navy);
+      font-weight: 600;
+      font-size: 0.88rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+    .btn-outline {
+      padding: 0.85rem 2rem;
+      border: 1px solid rgba(201,168,76,0.5);
+      color: var(--gold);
+      font-weight: 500;
+      font-size: 0.88rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s, transform 0.2s;
+    }
+
+    .btn-outline:hover { border-color: var(--gold); color: #fff; transform: translateY(-2px); }
+
+    .hero-contact-strip {
+      position: absolute;
+      bottom: 3rem;
+      left: 4rem;
+      display: flex;
+      gap: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 1s;
+      z-index: 2;
+    }
+
+    .contact-item {
+      font-size: 0.82rem;
+      color: #6b7a8a;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .contact-item a { color: #6b7a8a; text-decoration: none; transition: color 0.2s; }
+    .contact-item a:hover { color: var(--gold); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── SECTIONS ── */
+    section {
+      padding: 6rem 4rem;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.6rem;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 3.5rem;
+      position: relative;
+    }
+
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 48px;
+      height: 3px;
+      background: var(--gold);
+      margin-top: 1rem;
+    }
+
+    /* ── EXPERIENCE ── */
+    #experience { background: var(--cream); }
+
+    .exp-grid {
+      display: grid;
+      gap: 2rem;
+    }
+
+    .exp-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 2.2rem 2.5rem;
+      position: relative;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+
+    .exp-card::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 4px;
+      background: var(--gold);
+    }
+
+    .exp-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 36px rgba(0,0,0,0.09);
+    }
+
+    .exp-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .exp-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .exp-date {
+      font-size: 0.8rem;
+      color: var(--muted);
+      font-weight: 500;
+      background: #f0ece4;
+      padding: 0.3rem 0.8rem;
+      letter-spacing: 0.04em;
+    }
+
+    .exp-company {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    .exp-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+
+    .exp-bullets li {
+      font-size: 0.92rem;
+      color: #4a5568;
+      padding-left: 1.2rem;
+      position: relative;
+      line-height: 1.65;
+    }
+
+    .exp-bullets li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--gold);
+      font-weight: 700;
+    }
+
+    /* ── SKILLS ── */
+    #skills { background: var(--navy); }
+    #skills .section-label,
+    #skills .section-title { color: #fff; }
+    #skills .section-title::after { background: var(--gold); }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .skill-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(201,168,76,0.2);
+      padding: 2rem;
+      transition: background 0.25s, transform 0.25s;
+    }
+
+    .skill-card:hover {
+      background: rgba(201,168,76,0.08);
+      transform: translateY(-4px);
+    }
+
+    .skill-category {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    .skill-tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    .skill-tag {
+      font-size: 0.85rem;
+      color: #c8d4e0;
+      padding: 0.35rem 0.9rem;
+      border: 1px solid rgba(255,255,255,0.12);
+      font-weight: 400;
+    }
+
+    /* ── PROJECTS ── */
+    #projects { background: var(--cream); }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+
+    .project-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 2.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      transition: transform 0.25s, box-shadow 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+
+    .project-card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(0,0,0,0.09); }
+    .project-card:hover::after { transform: scaleX(1); }
+
+    .project-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 900;
+      color: #ede8df;
+      line-height: 1;
+    }
+
+    .project-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .project-org {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--gold);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .project-desc {
+      font-size: 0.91rem;
+      color: #4a5568;
+      line-height: 1.7;
+    }
+
+    /* ── EDUCATION ── */
+    #education { background: #1a2e45; }
+    #education .section-label { color: var(--gold); }
+    #education .section-title { color: #fff; }
+    #education .section-title::after { background: var(--gold); }
+
+    .edu-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(201,168,76,0.25);
+      padding: 3rem;
+      max-width: 760px;
+    }
+
+    .edu-school {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.4rem;
+    }
+
+    .edu-degree {
+      font-size: 0.95rem;
+      color: var(--gold);
+      font-weight: 500;
+      margin-bottom: 0.3rem;
+    }
+
+    .edu-dates {
+      font-size: 0.82rem;
+      color: #7a8fa6;
+      margin-bottom: 2rem;
+    }
+
+    .edu-section-title {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+      margin-top: 1.5rem;
+    }
+
+    .edu-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .edu-list li {
+      font-size: 0.9rem;
+      color: #a8bcc8;
+      padding-left: 1.2rem;
+      position: relative;
+      line-height: 1.6;
+    }
+
+    .edu-list li::before {
+      content: '◆';
+      position: absolute;
+      left: 0;
+      font-size: 0.5rem;
+      color: var(--gold);
+      top: 0.3em;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy);
+      text-align: center;
+      padding: 3rem 4rem;
+      border-top: 1px solid rgba(201,168,76,0.2);
+    }
+
+    footer p {
+      font-size: 0.85rem;
+      color: #4a5a6a;
+    }
+
+    footer a { color: var(--gold); text-decoration: none; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1.2rem; }
+      .nav-links a { font-size: 0.75rem; }
+      #hero { padding: 6rem 1.5rem 3rem; }
+      .hero-bg-shape { display: none; }
+      .hero-accent, .hero-accent-2 { display: none; }
+      .hero-contact-strip { left: 1.5rem; flex-direction: column; gap: 0.8rem; }
+      section { padding: 4rem 1.5rem; }
+      .exp-header { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">BJ</div>
+    <ul class="nav-links">
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#education">Education</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg-shape"></div>
+    <div class="hero-accent"></div>
+    <div class="hero-accent-2"></div>
+
+    <div class="hero-content">
+      <span class="hero-eyebrow">Finance &amp; Entrepreneurship</span>
+      <h1 class="hero-name">Burken<br><span>Jacobs</span></h1>
+      <p class="hero-tagline">
+        Finance student at the University of Nebraska‑Lincoln — entrepreneur, investor, and team leader with a knack for turning strategy into results.
+      </p>
+      <div class="hero-cta">
+        <a href="#experience" class="btn-primary">View My Work</a>
+        <a href="mailto:jacobsburken@gmail.com" class="btn-outline">Get in Touch</a>
+      </div>
+    </div>
+
+    <div class="hero-contact-strip">
+      <div class="contact-item">📍 Sioux Falls, SD &amp; Lincoln, NE</div>
+      <div class="contact-item">📧 <a href="mailto:jacobsburken@gmail.com">jacobsburken@gmail.com</a></div>
+      <div class="contact-item">📞 <a href="tel:6053109176">(605) 310-9176</a></div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="section-label">Where I've Been</div>
+    <h2 class="section-title">Work Experience</h2>
+
+    <div class="exp-grid">
+
+      <div class="exp-card">
+        <div class="exp-header">
+          <div class="exp-title">Owner / Operator</div>
+          <div class="exp-date">May 2019 – Present</div>
+        </div>
+        <div class="exp-company">Burk'N'Turf Lawncare — Sioux Falls, SD</div>
+        <ul class="exp-bullets">
+          <li>Founded and operate a full-service landscaping and lawncare business serving residential clients</li>
+          <li>Managed daily operations to ensure efficient workflow and client satisfaction</li>
+          <li>Expanded clientele through targeted marketing strategies and community outreach</li>
+          <li>Oversaw all financial transactions — cash handling, invoicing, and payment processing</li>
+          <li>Handled client scheduling, communication, and service coordination</li>
+          <li>Skilled in gutter installation and Adobe Photoshop for marketing material creation</li>
+        </ul>
+      </div>
+
+      <div class="exp-card">
+        <div class="exp-header">
+          <div class="exp-title">Concrete Laborer</div>
+          <div class="exp-date">May 2025 – Aug 2025</div>
+        </div>
+        <div class="exp-company">Nielson Construction — Sioux Falls, SD</div>
+        <ul class="exp-bullets">
+          <li>Operated hand and power tools to prepare concrete for pouring and finishing</li>
+          <li>Assisted in setting forms and reinforcing structures to ensure structural integrity</li>
+          <li>Collaborated with team members in Spanish to execute project plans efficiently and safely</li>
+        </ul>
+      </div>
+
+      <div class="exp-card">
+        <div class="exp-header">
+          <div class="exp-title">Assistant Treasurer</div>
+          <div class="exp-date">Aug 2025 – Present</div>
+        </div>
+        <div class="exp-company">Sigma Alpha Epsilon Fraternity — Lincoln, NE</div>
+        <ul class="exp-bullets">
+          <li>Assist in managing and allocating a chapter budget in excess of $200,000</li>
+          <li>Collaborate with chapter leadership on financial planning and expenditure oversight</li>
+        </ul>
+      </div>
+
+      <div class="exp-card">
+        <div class="exp-header">
+          <div class="exp-title">Founder &amp; Portfolio Manager</div>
+          <div class="exp-date">Jan 2026 – Present</div>
+        </div>
+        <div class="exp-company">The Brotherhood Fund — Lincoln, NE</div>
+        <ul class="exp-bullets">
+          <li>Co-founded an investment club managing $1,500+ of Sigma Alpha Epsilon members' capital</li>
+          <li>Oversee a 4-year portfolio strategy applying market knowledge to active investment decisions</li>
+          <li>Apply case study research and financial analytics to guide club decisions</li>
+        </ul>
+      </div>
+
+      <div class="exp-card">
+        <div class="exp-header">
+          <div class="exp-title">Research Analyst</div>
+          <div class="exp-date">2025 – Present</div>
+        </div>
+        <div class="exp-company">Big Red Investment Club — Lincoln, NE</div>
+        <ul class="exp-bullets">
+          <li>Research and recommend stocks for the club's $700,000+ portfolio</li>
+          <li>Participate in workshops focused on strategic buying and wealth management principles</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-label">What I Bring</div>
+    <h2 class="section-title">Skills</h2>
+
+    <div class="skills-grid">
+
+      <div class="skill-card">
+        <div class="skill-category">Finance &amp; Business</div>
+        <div class="skill-tag-list">
+          <span class="skill-tag">Revenue Growth Research</span>
+          <span class="skill-tag">Financial Analysis</span>
+          <span class="skill-tag">Investment Strategy</span>
+          <span class="skill-tag">Budget Management</span>
+          <span class="skill-tag">Business Planning</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-category">Operations &amp; Leadership</div>
+        <div class="skill-tag-list">
+          <span class="skill-tag">Small Business Operations</span>
+          <span class="skill-tag">Client Relations</span>
+          <span class="skill-tag">Team Collaboration</span>
+          <span class="skill-tag">Scheduling &amp; Logistics</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-category">Technical &amp; Software</div>
+        <div class="skill-tag-list">
+          <span class="skill-tag">Spreadsheet Analysis</span>
+          <span class="skill-tag">Adobe Photoshop</span>
+          <span class="skill-tag">Financial Modeling</span>
+          <span class="skill-tag">Cash Handling &amp; Payments</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-category">Languages</div>
+        <div class="skill-tag-list">
+          <span class="skill-tag">English (Native)</span>
+          <span class="skill-tag">Spanish (Working Level)</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-category">Interests</div>
+        <div class="skill-tag-list">
+          <span class="skill-tag">Basketball</span>
+          <span class="skill-tag">Golf</span>
+          <span class="skill-tag">Running</span>
+          <span class="skill-tag">Guitar</span>
+          <span class="skill-tag">Cooking</span>
+          <span class="skill-tag">Grilling</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-label">What I've Built</div>
+    <h2 class="section-title">Projects</h2>
+
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <div class="project-number">01</div>
+        <div class="project-org">MotoAmerica · Business 101</div>
+        <div class="project-title">Dynamic Pricing Strategy — Moto America Business Battle</div>
+        <p class="project-desc">
+          Collaborated with classmates to develop a data-driven dynamic pricing model designed to increase Moto America's ticket revenue. Competed against 196 teams and was evaluated on the statistical rigor and feasibility of our strategy — putting real financial thinking to work in a competitive academic environment.
+        </p>
+      </div>
+
+      <div class="project-card">
+        <div class="project-number">02</div>
+        <div class="project-org">The Brotherhood Fund · Lincoln, NE</div>
+        <div class="project-title">Investment Club Portfolio</div>
+        <p class="project-desc">
+          Co-founded an investment club within Sigma Alpha Epsilon, building a 4-year portfolio strategy from the ground up. Manages over $1,500 in member capital with a focus on long-term growth and market education for fellow members.
+        </p>
+      </div>
+
+      <div class="project-card">
+        <div class="project-number">03</div>
+        <div class="project-org">Burk'N'Turf · Sioux Falls, SD</div>
+        <div class="project-title">Entrepreneurial Lawncare Business</div>
+        <p class="project-desc">
+          Built a lawncare and landscaping operation from scratch starting at age 15. Developed all business systems — marketing, scheduling, financial oversight, and client acquisition — growing a steady client base through strategic outreach and reliable service.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <div class="section-label">My Foundation</div>
+    <h2 class="section-title">Education</h2>
+
+    <div class="edu-card">
+      <div class="edu-school">University of Nebraska–Lincoln</div>
+      <div class="edu-degree">Bachelor of Science in Business Administration — Finance</div>
+      <div class="edu-dates">August 2025 – May 2029</div>
+
+      <div class="edu-section-title">Honors &amp; Awards</div>
+      <ul class="edu-list">
+        <li>New Nebraskan Scholarship</li>
+        <li>National Honor Society (High School)</li>
+      </ul>
+
+      <div class="edu-section-title">Relevant Coursework</div>
+      <ul class="edu-list">
+        <li>Financial Wealth Management</li>
+        <li>Accounting &amp; Macroeconomics</li>
+        <li>Spreadsheet Analysis</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 Burken Jacobs &nbsp;·&nbsp; <a href="mailto:jacobsburken@gmail.com">jacobsburken@gmail.com</a> &nbsp;·&nbsp; <a href="tel:6053109176">(605) 310-9176</a></p>
+  </footer>
+
+</body>
+</html>
